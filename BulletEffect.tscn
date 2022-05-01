@@ -1,0 +1,119 @@
+[gd_scene load_steps=10 format=2]
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+lifetime_randomness = 0.4
+flag_align_y = true
+direction = Vector3( 0, 1, 0 )
+spread = 180.0
+flatness = 0.87
+gravity = Vector3( 0, 0.2, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 0.5
+scale_curve = SubResource( 7 )
+
+[sub_resource type="VisualShaderNodeColorConstant" id=11]
+constant = Color( 1, 0.978027, 0.4375, 1 )
+
+[sub_resource type="VisualShader" id=12]
+code = "shader_type spatial;
+render_mode specular_schlick_ggx;
+
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Color:3
+	vec3 n_out3p0 = vec3(1.000000, 0.978027, 0.437500);
+	float n_out3p1 = 1.000000;
+
+// Output:0
+	ALBEDO = n_out3p0;
+	EMISSION = n_out3p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -303.039, 157.841 )
+nodes/fragment/3/node = SubResource( 11 )
+nodes/fragment/3/position = Vector2( 80, 220 )
+nodes/fragment/connections = PoolIntArray( 3, 0, 0, 0, 3, 0, 0, 5 )
+
+[sub_resource type="ShaderMaterial" id=13]
+shader = SubResource( 12 )
+
+[sub_resource type="CubeMesh" id=8]
+material = SubResource( 13 )
+size = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "remove"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[node name="BulletEffect" type="Particles"]
+emitting = false
+amount = 6
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "remove"
+anims/RESET = SubResource( 9 )
+anims/remove = SubResource( 10 )
