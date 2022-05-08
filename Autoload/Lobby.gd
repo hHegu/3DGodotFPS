@@ -1,16 +1,20 @@
 extends Node
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+# Player info, associate ID to data
+remotesync var players: Dictionary = {} setget _set_players
+signal player_joined
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func register_to_server(id: int, username: String):
+	rpc_id(1, "_sync_players", id, {"username": username})
+
+
+remotesync func _sync_players(id, new_player):
+	if Utils.is_host():
+		players[id] = new_player
+		rset('players', players)
+
+
+func _set_players(new_players):
+	players = new_players
+	emit_signal("player_joined", players)

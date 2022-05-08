@@ -29,7 +29,10 @@ config/icon="res://icon.png"
 WeaponSingleton="*res://Autoload/weapon_singleton.gd"
 Enums="*res://Autoload/enums.gd"
 Network="*res://Autoload/Network.gd"
+Utils="*res://Autoload/Utils.gd"
+Players="*res://Autoload/Players.tscn"
 Lobby="*res://Autoload/Lobby.gd"
+GameMaster="*res://Autoload/GameMaster.gd"
 
 [debug]
 

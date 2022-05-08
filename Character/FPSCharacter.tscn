@@ -152,4 +152,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68612, 0 )
 layers = 2
 radius = 0.25
 
+[node name="NetworkUtils" type="Node" parent="."]
+
+[node name="PositionTween" type="Tween" parent="NetworkUtils"]
+
 [connection signal="tween_all_completed" from="RecoilTween" to="." method="_on_RecoilTween_tween_all_completed"]

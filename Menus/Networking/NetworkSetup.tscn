@@ -19,6 +19,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0.196078, 0.25098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MultiplayerConfigure" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -44,9 +52,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CreateServer" type="Button" parent="MultiplayerConfigure/VBoxContainer"]
+[node name="Username" type="LineEdit" parent="MultiplayerConfigure/VBoxContainer"]
 margin_right = 200.0
-margin_bottom = 40.0
+margin_bottom = 31.0
+expand_to_text_length = true
+placeholder_text = "Enter username"
+caret_blink = true
+
+[node name="CreateServer" type="Button" parent="MultiplayerConfigure/VBoxContainer"]
+margin_top = 41.0
+margin_right = 200.0
+margin_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 200, 40 )
@@ -58,9 +74,9 @@ __meta__ = {
 }
 
 [node name="JoinServer" type="Button" parent="MultiplayerConfigure/VBoxContainer"]
-margin_top = 50.0
+margin_top = 106.0
 margin_right = 200.0
-margin_bottom = 90.0
+margin_bottom = 161.0
 grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 200, 40 )
@@ -72,9 +88,9 @@ __meta__ = {
 }
 
 [node name="ServerIPAddress" type="LineEdit" parent="MultiplayerConfigure/VBoxContainer"]
-margin_top = 100.0
+margin_top = 171.0
 margin_right = 200.0
-margin_bottom = 133.0
+margin_bottom = 202.0
 expand_to_text_length = true
 placeholder_text = "Enter IP address"
 caret_blink = true
@@ -102,5 +118,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="text_changed" from="MultiplayerConfigure/VBoxContainer/Username" to="." method="_on_Username_text_changed"]
 [connection signal="pressed" from="MultiplayerConfigure/VBoxContainer/CreateServer" to="." method="_on_CreateServer_pressed"]
 [connection signal="pressed" from="MultiplayerConfigure/VBoxContainer/JoinServer" to="." method="_on_JoinServer_pressed"]
