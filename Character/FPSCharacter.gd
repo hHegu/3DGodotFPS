@@ -47,6 +47,7 @@ puppet var puppet_velocity: Vector3
 
 func _ready():
 	WeaponSingleton.connect("weapon_was_fired", self, "on_weapon_was_fired")
+	GameMaster.connect("round_started", self, "_on_round_started")
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 
 	initial_body_height = body.shape.height
@@ -221,9 +222,14 @@ func puppet_transform_set(new_transform: Transform):
 
 func set_is_player_enabled(is_enabled: bool):
 	is_player_enabled = is_enabled
-	$Pivot/RecoilPivot/Camera.current = is_enabled
+	$Pivot/RecoilPivot/Camera.current = is_network_master() and is_enabled
 	set_physics_process(is_enabled)
 	set_process(is_enabled)
 	current_weapon.set_physics_process(is_enabled)
 	current_weapon.set_process(is_enabled)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if is_enabled else Input.MOUSE_MODE_VISIBLE)
+
+
+func _on_round_started():
+	if is_network_master():
+		set_is_player_enabled(true)

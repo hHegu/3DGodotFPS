@@ -16,6 +16,7 @@ onready var join_error_msg = $MultiplayerConfigure/VBoxContainer/JoinErrorMsg
 var error_msg_timer: Timer
 
 func _ready():
+	username.grab_focus()
 	error_msg_timer = Timer.new()
 	error_msg_timer.one_shot = true
 	add_child(error_msg_timer)

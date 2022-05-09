@@ -1,0 +1,123 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://UI/WeaponHUD.gd" type="Script" id=1]
+[ext_resource path="res://UI/Reticle.gd" type="Script" id=2]
+[ext_resource path="res://UI/Reticle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/fonts/OpenSans-Medium.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://theme.tres" type="Theme" id=5]
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 4 )
+
+[node name="HUD" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reticle" type="Control" parent="." instance=ExtResource( 3 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -0.5
+margin_top = -0.5
+margin_right = 0.5
+margin_bottom = 0.5
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 300.0 ],
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 512.0 ]
+}
+
+[node name="WeaponHUD" type="Panel" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -216.0
+margin_top = -98.0
+margin_right = -22.0
+margin_bottom = -22.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WeaponHUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AmmoContainer" type="HBoxContainer" parent="WeaponHUD/VBoxContainer"]
+margin_right = 194.0
+margin_bottom = 43.0
+size_flags_horizontal = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ClipAmmo" type="RichTextLabel" parent="WeaponHUD/VBoxContainer/AmmoContainer"]
+margin_right = 87.0
+margin_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]30[/center]"
+text = "[center]30[/center]"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Divider" type="RichTextLabel" parent="WeaponHUD/VBoxContainer/AmmoContainer"]
+margin_left = 91.0
+margin_right = 103.0
+margin_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 12, 0 )
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]/[/center]"
+text = "[center]/[/center]"
+fit_content_height = true
+
+[node name="CurrentAmmo" type="RichTextLabel" parent="WeaponHUD/VBoxContainer/AmmoContainer"]
+margin_left = 107.0
+margin_right = 194.0
+margin_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]120[/center]"
+text = "[center]120[/center]"
+fit_content_height = true
+
+[node name="WeaponName" type="RichTextLabel" parent="WeaponHUD/VBoxContainer"]
+margin_top = 47.0
+margin_right = 194.0
+margin_bottom = 76.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[center]Weapon Name[/center]"
+text = "[center]Weapon Name[/center]"
+fit_content_height = true

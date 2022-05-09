@@ -10,11 +10,17 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Spatial",
+"class": "Level",
+"language": "GDScript",
+"path": "res://Levels/Level.gd"
+}, {
+"base": "Spatial",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Weapons/Weapon.gd"
 } ]
 _global_script_class_icons={
+"Level": "",
 "Weapon": ""
 }
 

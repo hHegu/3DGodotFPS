@@ -1,10 +1,14 @@
 extends Node
 
 var player_character = preload("res://Character/FPSCharacter.tscn")
+var current_level
 
+signal round_started
 
-remotesync func start_game():
+remotesync func start_game(level := "res://Levels/test_level.tscn"):
 	_initiate_players()
+	get_tree().change_scene(level)
+	current_level = get_tree().current_scene
 
 
 func _initiate_players():
