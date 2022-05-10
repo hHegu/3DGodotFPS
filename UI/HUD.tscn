@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://UI/WeaponHUD.gd" type="Script" id=1]
-[ext_resource path="res://UI/Reticle.gd" type="Script" id=2]
+[ext_resource path="res://UI/HUD.gd" type="Script" id=2]
 [ext_resource path="res://UI/Reticle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/fonts/OpenSans-Medium.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://theme.tres" type="Theme" id=5]
@@ -10,31 +10,48 @@
 size = 30
 font_data = ExtResource( 4 )
 
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.541176, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "hurt"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1.36604, 1 ),
+"update": 0,
+"values": [ Color( 0.541176, 0, 0, 0.0705882 ), Color( 0.541176, 0, 0, 0 ) ]
+}
+
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource( 5 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Reticle" type="Control" parent="." instance=ExtResource( 3 )]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -0.5
-margin_top = -0.5
-margin_right = 0.5
-margin_bottom = 0.5
-mouse_filter = 2
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_horizontal_guides_": [ 300.0 ],
-"_edit_use_anchors_": false,
-"_edit_vertical_guides_": [ 512.0 ]
-}
+[node name="Reticle" parent="." instance=ExtResource( 3 )]
 
 [node name="WeaponHUD" type="Panel" parent="."]
 anchor_left = 1.0
@@ -77,7 +94,7 @@ size_flags_vertical = 3
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[center]30[/center]"
-text = "[center]30[/center]"
+text = "30"
 fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -94,7 +111,7 @@ size_flags_vertical = 3
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[center]/[/center]"
-text = "[center]/[/center]"
+text = "/"
 fit_content_height = true
 
 [node name="CurrentAmmo" type="RichTextLabel" parent="WeaponHUD/VBoxContainer/AmmoContainer"]
@@ -108,7 +125,7 @@ size_flags_vertical = 3
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[center]120[/center]"
-text = "[center]120[/center]"
+text = "120"
 fit_content_height = true
 
 [node name="WeaponName" type="RichTextLabel" parent="WeaponHUD/VBoxContainer"]
@@ -119,5 +136,63 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
 bbcode_text = "[center]Weapon Name[/center]"
-text = "[center]Weapon Name[/center]"
+text = "Weapon Name"
 fit_content_height = true
+
+[node name="PlayerStatusHUD" type="Panel" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = -98.0
+margin_right = 216.0
+margin_bottom = -22.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerStatusHUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="RichTextLabel" parent="PlayerStatusHUD/VBoxContainer"]
+margin_right = 194.0
+margin_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]100[/center]"
+text = "100"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthName" type="RichTextLabel" parent="PlayerStatusHUD/VBoxContainer"]
+margin_top = 47.0
+margin_right = 194.0
+margin_bottom = 76.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[center]Health[/center]"
+text = "Health"
+fit_content_height = true
+
+[node name="HurtBox" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.541176, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HurtBox"]
+anims/RESET = SubResource( 4 )
+anims/hurt = SubResource( 5 )

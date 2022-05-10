@@ -34,3 +34,7 @@ func _physics_process(_delta):
 		Tween.EASE_OUT
 	)
 	zoom_tween.start()
+
+
+func _player_was_damaged(damage):
+	pass

@@ -12,3 +12,6 @@ func instance_node(node: Object, parent: Spatial) -> Spatial:
 
 func is_host():
 	return get_tree().is_network_server()
+
+func center_bbtext(text: String):
+	return "[center]%s[/center]" % text

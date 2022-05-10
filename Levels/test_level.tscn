@@ -113,27 +113,27 @@ fit_content_height = true
 [node name="BlueTeam" type="Node" parent="SpawnPositions"]
 
 [node name="Position3D" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2521, 0, 3.4828 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2521, 0.242309, 3.4828 )
 
 [node name="Position3D2" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2521, 0, 2.40313 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2521, 0.242309, 2.40313 )
 
 [node name="Position3D3" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9604, 0, 2.40313 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9604, 0.242309, 2.40313 )
 
 [node name="Position3D4" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9604, 0, 3.4103 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9604, 0.242309, 3.4103 )
 
 [node name="RedTeam" type="Node" parent="SpawnPositions"]
 
 [node name="Position3D" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.58219, 0, -4.67208 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.86681, 0.242309, -3.61402 )
 
 [node name="Position3D2" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.58219, 0, -3.18827 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.86681, 0.242309, -2.13022 )
 
 [node name="Position3D3" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.95692, 0, -3.18827 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.24154, 0.242309, -2.13022 )
 
 [node name="Position3D4" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.95692, 0, -4.73607 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.24154, 0.242309, -3.67802 )

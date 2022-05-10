@@ -39,6 +39,7 @@ Utils="*res://Autoload/Utils.gd"
 Players="*res://Autoload/Players.tscn"
 Lobby="*res://Autoload/Lobby.gd"
 GameMaster="*res://Autoload/GameMaster.gd"
+HUDSingleton="*res://Autoload/HUDSingleton.gd"
 
 [debug]
 
@@ -47,8 +48,8 @@ gdscript/warnings/return_value_discarded=false
 
 [display]
 
-window/size/test_width=1920
-window/size/test_height=1080
+window/size/test_width=1280
+window/size/test_height=720
 
 [editor_plugins]
 

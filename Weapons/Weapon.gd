@@ -79,18 +79,24 @@ func _ready():
 	
 	spread_recovery_timer.connect("timeout", self, "_on_SpreadRecoveryTimer_timeout")
 	
-	WeaponSingleton.connect("current_weapon_changed", self, "enable_weapon")
+	WeaponSingleton.connect("current_weapon_changed", self, "_current_weapon_changed")
 
+func _current_weapon_changed(curr: Weapon):
+	if is_network_master():
+		rpc("enable_weapon", curr.weapon_name)
 
-func enable_weapon(curr: Weapon):
-	is_current = curr.weapon_name == weapon_name
+remotesync func enable_weapon(current_weapon_name):
+	is_current = current_weapon_name == weapon_name
 	anim.stop()
-	anim.play("switch_to")
+	rpc("play_anim_synced", "switch_to")
 	is_reloading = false
 	visible = is_current
 
 
-func _process(_delta):	
+func _process(_delta):
+	if not is_network_master():
+		return
+
 	if not is_current or anim.current_animation == 'switch_to':
 		return
 
@@ -112,7 +118,7 @@ func _process(_delta):
 			return
 		WeaponSingleton.fire()
 		anim.stop(true)
-		anim.play("fire_aim" if WeaponSingleton.is_aiming else "fire")
+		rpc("play_anim_synced", "fire_aim" if WeaponSingleton.is_aiming else "fire")
 		fire_rate_timer.start(fire_rate)
 		
 		var center := get_viewport().size / 2
@@ -151,23 +157,26 @@ func fire_bullet(from: Vector3, to: Vector3) -> void:
 	var player = get_parent().get_parent().get_parent().get_parent().get_parent()
 	var result = get_world().direct_space_state.intersect_ray(from, to, [self, player])
 
-	if result and result.has('position'):
-		var effect_i: Particles = bullet_effect.instance()
-		effect_i.transform.origin = result.position
-		get_tree().root.add_child(effect_i)
-
 	if result and result.collider and result.collider.has_method('take_damage'):
 		result.collider.take_damage(damage)
-	
-	var bullet_i = bullet_trail.instance()
-	bullet_i.target_position = (
+
+	var bullet_effect_to = (
 		to
 		if not result.has('position')
 		else result.position
 	)
+	rpc("_show_bullet_trail", from, bullet_effect_to, result and result.has('position'))
+
+remotesync func _show_bullet_trail(from, to, spawn_effect: bool):
+	var bullet_i = bullet_trail.instance()
+	bullet_i.target_position = to
 	bullet_i.transform.origin = from
 	get_tree().root.add_child(bullet_i)
-
+	
+	if spawn_effect:
+		var effect_i: Particles = bullet_effect.instance()
+		effect_i.transform.origin = to
+		get_tree().root.add_child(effect_i)
 
 func handle_ammo() -> bool:
 	var can_fire = clip_ammo > 0
@@ -180,7 +189,7 @@ func reload():
 	if clip_ammo == clip_size or ammo == 0:
 		return
 	is_reloading = true
-	anim.play("reload")
+	rpc("play_anim_synced", "reload")
 
 
 func reload_finished():
@@ -202,3 +211,7 @@ func get_spread() -> float:
 func _on_SpreadRecoveryTimer_timeout():
 	# Reset spread when recovered
 	spread_timer.stop()
+
+
+remotesync func play_anim_synced(anim_name):
+	anim.play(anim_name)

@@ -10,6 +10,7 @@ signal camera_aim(is_aiming)
 signal weapon_did_damage
 signal weapon_was_fired(weapon)
 
+
 func aim(aiming: bool):
 	is_aiming = aiming
 	emit_signal("camera_aim", aiming)
@@ -22,6 +23,7 @@ func change_weapon(new_weapon: Weapon):
 
 func show_hitmarks(damage: float, type: int):
 	emit_signal("weapon_did_damage", damage, type)
+
 
 func fire():
 	emit_signal("weapon_was_fired", current_weapon)

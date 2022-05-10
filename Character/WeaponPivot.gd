@@ -29,6 +29,9 @@ func _input(event):
 
 
 func _physics_process(delta):
+	if not is_network_master():
+		return
+
 	aim()
 
 	if mouse_mov_x == null:
@@ -43,23 +46,30 @@ func _physics_process(delta):
 
 
 func aim():
+	if not WeaponSingleton.current_weapon:
+		return
+
 	var is_reloading = WeaponSingleton.current_weapon.is_reloading
 
 	aiming = Input.is_action_pressed("aim") and not is_reloading
 
 	if aiming and ! WeaponSingleton.is_aiming:
 		WeaponSingleton.aim(true)
+		rpc("move_weapon_to_aim_pos", true)
 	if ! aiming and WeaponSingleton.is_aiming:
 		WeaponSingleton.aim(false)
+		rpc("move_weapon_to_aim_pos", false)
 
-	if aiming:
+
+remotesync func move_weapon_to_aim_pos(is_aiming):
+	if is_aiming:
 		var hand_target = WeaponSingleton.current_weapon.hand_aim_position
 		aim_tween.interpolate_property(
 			hand,
 			'translation',
 			hand.transform.origin,
 			hand_target,
-			0.051,
+			0.15,
 			Tween.TRANS_LINEAR,
 			Tween.EASE_OUT
 		)
@@ -69,7 +79,7 @@ func aim():
 			'translation',
 			hand.transform.origin,
 			hand_initial_pos,
-			0.051,
+			0.15,
 			Tween.TRANS_LINEAR,
 			Tween.EASE_OUT
 		)
