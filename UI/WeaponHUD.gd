@@ -12,4 +12,3 @@ func _process(_delta):
 	clip_ammo_text.bbcode_text = Utils.center_bbtext(str(current_weapon.clip_ammo))
 	current_ammo_text.bbcode_text = Utils.center_bbtext(str(current_weapon.ammo))
 	weapon_name_text.bbcode_text = Utils.center_bbtext(current_weapon.weapon_name)
-

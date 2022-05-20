@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Character/FPSCharacter.gd" type="Script" id=1]
-[ext_resource path="res://Weapons/Shotgun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://lowpoly_human2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Character/WeaponPivot.gd" type="Script" id=3]
 [ext_resource path="res://Character/PlayerCamera.gd" type="Script" id=4]
-[ext_resource path="res://Weapons/Pistol.tscn" type="PackedScene" id=5]
+[ext_resource path="res://RigAnimationController.gd" type="Script" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -72,8 +72,7 @@ tracks/0/keys = {
 [node name="FPSCharacter" type="KinematicBody"]
 collision_layer = 4
 script = ExtResource( 1 )
-weapon_1 = ExtResource( 2 )
-weapon_2 = ExtResource( 5 )
+weapons = [ 3, 1, 2 ]
 
 [node name="Body" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
@@ -88,8 +87,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55383, 0 )
 cull_mask = 1048573
 fov = 90.0
 script = ExtResource( 4 )
+pickup_mask = 8
 
 [node name="ZoomTween" type="Tween" parent="Pivot/RecoilPivot/Camera"]
+
+[node name="PickupCast" type="RayCast" parent="Pivot/RecoilPivot/Camera"]
+enabled = true
+cast_to = Vector3( 0, 0, -2 )
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="WeaponPivot" type="Spatial" parent="Pivot/RecoilPivot"]
 script = ExtResource( 3 )
@@ -128,6 +135,7 @@ wait_time = 0.2
 one_shot = true
 
 [node name="Model" type="Spatial" parent="."]
+visible = false
 
 [node name="CSGCylinder" type="CSGCylinder" parent="Model"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.745033, 0 )
@@ -146,5 +154,9 @@ radius = 0.25
 [node name="NetworkUtils" type="Node" parent="."]
 
 [node name="PositionTween" type="Tween" parent="NetworkUtils"]
+
+[node name="lowpoly_human" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.13, 0, -1.1365e-08, 0, 0.13, 0, 1.1365e-08, 0, -0.13, 0, 0, 0 )
+script = ExtResource( 5 )
 
 [connection signal="tween_all_completed" from="RecoilTween" to="." method="_on_RecoilTween_tween_all_completed"]

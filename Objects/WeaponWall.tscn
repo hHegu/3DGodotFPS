@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Objects/WeaponWall.gd" type="Script" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=5]
+period = 176.0
+lacunarity = 2.27
+
+[sub_resource type="NoiseTexture" id=6]
+seamless = true
+noise = SubResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.682353, 0.682353, 0.682353, 1 )
+metallic = 0.8
+metallic_texture = SubResource( 6 )
+roughness = 0.26
+anisotropy_enabled = true
+anisotropy = 0.0
+
+[node name="WeaponWall" type="Spatial"]
+script = ExtResource( 1 )
+weapons = [ 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0 ]
+
+[node name="Wall" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0 )
+use_collision = true
+width = 0.2
+height = 1.5
+depth = 3.0
+material = SubResource( 4 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.487083, 0, 0.873356, 0, 1, 0, -0.873356, 0, 0.487083, 3.0098, 0.885641, 1.72585 )
+current = true

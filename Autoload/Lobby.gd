@@ -30,7 +30,7 @@ func _get_team_with_least_players():
 	
 	return Enums.TEAMS.BLUE if blue_team_size < red_team_size else Enums.TEAMS.RED
 
-	
+
 func get_amount_of_players_loaded():
 	var count := 0
 	for player_id in players:
@@ -57,3 +57,7 @@ remotesync func switch_team(id, team):
 remotesync func player_map_load_ready(id):
 	Lobby.players[id].map_loaded = true
 	emit_signal("player_map_loaded")
+
+
+remotesync func set_player(id, new_player):
+	Lobby.players[id] = new_player

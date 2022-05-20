@@ -14,14 +14,26 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Levels/Level.gd"
 }, {
+"base": "KinematicBody",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Character/FPSCharacter.gd"
+}, {
 "base": "Spatial",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://Weapons/Weapon.gd"
+}, {
+"base": "RigidBody",
+"class": "WeaponPickup",
+"language": "GDScript",
+"path": "res://Objects/WeaponPickup.gd"
 } ]
 _global_script_class_icons={
 "Level": "",
-"Weapon": ""
+"Player": "",
+"Weapon": "",
+"WeaponPickup": ""
 }
 
 [application]
@@ -32,7 +44,6 @@ config/icon="res://icon.png"
 
 [autoload]
 
-WeaponSingleton="*res://Autoload/weapon_singleton.gd"
 Enums="*res://Autoload/enums.gd"
 Network="*res://Autoload/Network.gd"
 Utils="*res://Autoload/Utils.gd"
@@ -40,6 +51,9 @@ Players="*res://Autoload/Players.tscn"
 Lobby="*res://Autoload/Lobby.gd"
 GameMaster="*res://Autoload/GameMaster.gd"
 HUDSingleton="*res://Autoload/HUDSingleton.gd"
+Signals="*res://Autoload/Signals.gd"
+Weapons="*res://Autoload/Weapons.gd"
+WeaponSingleton="*res://Autoload/WeaponSingleton.gd"
 
 [debug]
 
@@ -50,6 +64,8 @@ gdscript/warnings/return_value_discarded=false
 
 window/size/test_width=1280
 window/size/test_height=720
+window/vsync/use_vsync=false
+window/stretch/aspect="expand"
 
 [editor_plugins]
 
@@ -58,6 +74,7 @@ enabled=PoolStringArray( "res://addons/Trail/plugin.cfg" )
 [global]
 
 fps=false
+wi=false
 
 [input]
 
@@ -106,9 +123,29 @@ reload={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
-switch_weapon={
+previous_weapon={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+weapon_1={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":49,"unicode":0,"echo":false,"script":null)
+ ]
+}
+weapon_2={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":50,"unicode":0,"echo":false,"script":null)
+ ]
+}
+weapon_3={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":51,"unicode":0,"echo":false,"script":null)
+ ]
+}
+use={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":69,"unicode":0,"echo":false,"script":null)
  ]
 }
 
@@ -120,6 +157,7 @@ switch_weapon={
 3d_physics/layer_1="default"
 3d_physics/layer_2="ground"
 3d_physics/layer_3="player"
+3d_physics/layer_4="pickup"
 
 [physics]
 

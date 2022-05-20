@@ -1,6 +1,8 @@
 # The main player controller
 extends KinematicBody
 
+class_name Player
+
 onready var pivot: Spatial = $Pivot
 onready var recoil_pivot: Spatial = $Pivot/RecoilPivot
 onready var hand: Spatial = $Pivot/RecoilPivot/WeaponPivot/Hand
@@ -10,7 +12,7 @@ onready var crouch_tween: Tween = $CrouchTween
 onready var recoil_tween: Tween = $RecoilTween
 onready var coyote_timer: Timer = $CoyoteTimer
 onready var buffered_jump_timer: Timer = $BufferedJumpTimer
-
+onready var camera: Camera = $Pivot/RecoilPivot/Camera
 onready var network_position_tween: Tween = $NetworkUtils/PositionTween
 
 export var gravity := -20.0
@@ -21,15 +23,15 @@ export var mouse_sensitivity := 0.002  # radians/pixel
 export var jump_strength := 10.0
 export var crouch_height := 0.5
 
-export (Resource) var weapon_1
-export (Resource) var weapon_2
+export(Array, Enums.WEAPONS_ENUM) var weapons: Array
 
 var current_weapon: Weapon
 var current_weapon_index: int = 0
+var prev_weapon_index: int = 1
 
 var grounded := true
 
-var is_player_enabled: bool setget set_is_player_enabled
+export var is_controlled_by_player: bool
 var initial_body_height: float
 var initial_pivot_height: float
 var velocity := Vector3()
@@ -38,17 +40,18 @@ var is_crouching := false
 var has_jumped := false
 
 # Player information
-remotesync var player_name: String
-remotesync var player_health: float = 100
+var player_max_health: float = 100.0
+remotesync var player_health: float = 100.0 setget set_player_health
 
 # Network related variables
 puppet var puppet_transform: Transform setget puppet_transform_set
 puppet var puppet_velocity: Vector3
 
+var weapon_pickup = preload("res://Objects/WeaponPickup.tscn")
 
 func _ready():
 	WeaponSingleton.connect("weapon_was_fired", self, "on_weapon_was_fired")
-	GameMaster.connect("round_started", self, "_on_round_started")
+	camera.connect("weapon_picked_up", self, "_weapon_picked_up")
 	set_physics_process(false)
 	set_process(false)
 	
@@ -62,28 +65,54 @@ func _ready():
 	initial_body_height = body.shape.height
 	initial_pivot_height = pivot.translation.y
 
-	var weapon_1_i: Weapon = weapon_1.instance()
-	var weapon_2_i: Weapon = weapon_2.instance()
+	
 
-	hand.add_child(weapon_1_i)
-	hand.add_child(weapon_2_i)
+	for weapon in weapons:
+		var weapon_i = Weapons.get_weapon_instance(weapon)
+		hand.add_child(weapon_i)
+		weapon_i.set_network_master(get_network_master())
 
-	weapon_1_i.set_network_master(get_network_master())
-	weapon_2_i.set_network_master(get_network_master())
-
-	current_weapon = weapon_1_i
+	current_weapon = hand.get_child(0)
 	
 	$Pivot/RecoilPivot/WeaponPivot.set_network_master(get_network_master())
 	
-	if is_network_master():
-		WeaponSingleton.change_weapon(weapon_1_i)
+	if is_network_master() and current_weapon:
+		WeaponSingleton.change_weapon(current_weapon)
 
 	_make_body_visible_for_other_than_owner()
 
+
 func _make_body_visible_for_other_than_owner():
 	if not is_network_master():
+		$lowpoly_human/Armature/Skeleton/Cube.layers = 1
 		for body_part in $Model.get_children():
 			body_part.layers = 1
+
+
+func set_player_health(new_health):
+	print(player_health)
+	# If player is already dead
+	if player_health == 0:
+		player_health = max(0, new_health)
+		return
+
+	player_health = max(0, new_health)
+
+	if player_health == 0:
+		death()
+
+	if is_network_master():
+		HUDSingleton.set_hud_healt(player_health)
+
+
+func death():
+	if is_network_master():
+		toggle_player_control(false)
+		toggle_player_camera(false)
+		GameMaster.emit_signal("player_died", get_network_master())
+
+	visible = false
+	body.disabled = true
 
 
 func get_input():
@@ -101,13 +130,14 @@ func get_input():
 
 
 func _unhandled_input(event):
-	if not is_network_master() or not is_player_enabled:
+	if not is_network_master() or not is_controlled_by_player:
 		return
 
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		pivot.rotate_x(-event.relative.y * mouse_sensitivity)
 		pivot.rotation.x = clamp(pivot.rotation.x, deg2rad(-90), deg2rad(90))
+
 
 func get_movement_speed():
 	if is_crouching:
@@ -118,8 +148,19 @@ func get_movement_speed():
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("switch_weapon") and is_network_master():
-		change_weapon(0 if current_weapon_index == 1 else 1)
+	if Input.is_action_just_pressed("previous_weapon") and is_network_master():
+		change_weapon(prev_weapon_index)
+	
+	var pressed_weapon_id = get_pressed_weapon_id()
+	if pressed_weapon_id != null:
+		change_weapon(pressed_weapon_id)
+
+
+func get_pressed_weapon_id():
+	for i in 3:
+		if Input.is_action_just_pressed("weapon_%s" % str(i + 1)):
+			return i
+	return null
 
 
 func _physics_process(delta):
@@ -192,7 +233,15 @@ func crouch():
 
 
 func change_weapon(weapon_index: int):
-	if current_weapon.weapon_name != hand.get_child(weapon_index).weapon_name:
+	if weapons.size() < weapon_index + 1:
+		return
+
+	# If we have only one weapon or if we have no weapons, escape function
+	if !current_weapon and hand.get_child_count() == 0 or hand.get_child_count() == 1:
+		return
+
+	if !current_weapon or current_weapon.name != hand.get_child(weapon_index).name:
+		prev_weapon_index = current_weapon_index
 		current_weapon = hand.get_child(weapon_index)
 		current_weapon_index = weapon_index
 		WeaponSingleton.change_weapon(current_weapon)
@@ -208,6 +257,7 @@ var self_target_vector = Vector3(0, 0, 0)
 func on_weapon_was_fired(weapon: Weapon):
 	if not is_network_master():
 		return
+
 	var recoil = weapon.get_recoil()
 	vertical_target_recoil = recoil_pivot.rotation.x + deg2rad(recoil.y)
 	horizontal_target_recoil =  rotation.y + deg2rad(recoil.x)
@@ -234,36 +284,70 @@ func _on_RecoilTween_tween_all_completed():
 	recoil_pivot.rotation.x = 0
 
 
-func puppet_transform_set(new_transform: Transform):
+puppet func puppet_transform_set(new_transform: Transform):
 	puppet_transform = new_transform
 	network_position_tween.interpolate_property(self, "global_transform", global_transform, new_transform, 0.05)
 	network_position_tween.start()
 
 
-func set_is_player_enabled(is_enabled: bool):
-	is_player_enabled = is_enabled
-	$Pivot/RecoilPivot/Camera.current = is_network_master() and is_enabled
+func toggle_player_control(is_enabled: bool):
+	is_controlled_by_player = is_enabled
 	set_physics_process(is_enabled)
 	set_process(is_enabled)
-	
-#	current_weapon.set_physics_process(is_enabled)
-#	current_weapon.set_process(is_enabled)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if is_enabled else Input.MOUSE_MODE_VISIBLE)
 
 
-func _on_round_started():
-	if is_network_master():
-		set_is_player_enabled(true)
+func toggle_player_camera(camera_enabled: bool):
+	camera.current = camera_enabled
+	if camera_enabled:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
-func take_damage(damage):
+remotesync func reset_player():
+	set_player_health(player_max_health)
+
+
+func take_damage(damage) -> int:
 	var is_lethal = player_health - damage <= 0
 	var hitmark_type = Enums.HITMARK_TYPE.KILL if is_lethal else Enums.HITMARK_TYPE.BODY
-	WeaponSingleton.show_hitmarks(damage, hitmark_type)
+	rpc("_take_damage_sync", damage)
+	return hitmark_type
+
+
+master func _take_damage_sync(damage):
 	rset("player_health", player_health - damage)
-	rpc("show_hit_effect", damage)
-
-
-master func show_hit_effect(damage):
 	HUDSingleton.show_damage_effect(damage)
-	HUDSingleton.set_hud_healt(player_health)
+
+
+func _weapon_picked_up(weapon_i: Weapon):
+	var old_weapon = hand.get_child(current_weapon_index)
+	hand.add_child_below_node(old_weapon, weapon_i)
+	hand.remove_child(old_weapon)
+	weapon_i.set_network_master(get_network_master())
+	WeaponSingleton.change_weapon(weapon_i)
+	current_weapon = weapon_i
+
+	rpc("drop_old_weapon", Utils.uuid('weapon_drop'), old_weapon.weapon_id, old_weapon.get_ammo_stats())
+	rpc("sync_wepon_pickup", weapon_i.weapon_id, current_weapon_index)
+
+remotesync func drop_old_weapon(weapon_drop_id, weapon_enum_id, weapon_ammo_stats):
+	print(weapon_ammo_stats)
+	var weapon_pickup_i: WeaponPickup = weapon_pickup.instance()
+	weapon_pickup_i.name = weapon_drop_id
+	weapon_pickup_i.weapon_i = Weapons.get_weapon_instance(weapon_enum_id)
+	weapon_pickup_i.weapon_i.apply_ammo(weapon_ammo_stats)
+	weapon_pickup_i.weapon_i.name = "w_" + weapon_drop_id
+	weapon_pickup_i.transform.origin = hand.global_transform.origin
+	weapon_pickup_i.mode = RigidBody.MODE_RIGID
+#	weapon_pickup_i.look_at_from_position(transform.origin, Vector3.FORWARD, Vector3.UP)
+	get_tree().get_root().add_child(weapon_pickup_i)
+	var forward_vector = Vector3.FORWARD.rotated(Vector3.UP, rotation.y) * -1
+	weapon_pickup_i.look_at(forward_vector * 10, Vector3.UP)
+	weapon_pickup_i.apply_impulse(Vector3.ZERO, forward_vector * -1.2)
+	weapon_pickup_i.apply_torque_impulse(forward_vector * 0.1)
+
+remote func sync_wepon_pickup(weapon_enum_id, weapon_index):
+	var weapon_i = Weapons.get_weapon_instance(weapon_enum_id)
+	var old_weapon = hand.get_child(current_weapon_index)
+	hand.add_child_below_node(old_weapon, weapon_i)
+	hand.remove_child(old_weapon)
+	weapon_i.set_network_master(get_network_master())

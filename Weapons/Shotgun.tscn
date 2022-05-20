@@ -153,6 +153,7 @@ tracks/1/keys = {
 [node name="Shotgun" type="Spatial"]
 script = ExtResource( 1 )
 weapon_name = "Shotgun"
+weapon_id = 1
 effective_range = 60.0
 bullet_spread = 0.1
 spread_over_time = SubResource( 7 )

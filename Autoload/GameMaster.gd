@@ -5,10 +5,14 @@ var current_level
 
 signal round_started
 
+# Player has died. Emitted only for the client of the player that has died
+signal player_died
+
+
 remotesync func start_game(level := "res://Levels/test_level.tscn"):
+	_initiate_players()
 	get_tree().change_scene(level)
 	current_level = get_tree().current_scene
-	_initiate_players()
 
 
 func _initiate_players():
@@ -20,5 +24,3 @@ func _instance_player(id: int, player: Dictionary):
 	var player_i = Utils.instance_node(player_character, Players)
 	player_i.set_network_master(id)
 	player_i.name = str(id)
-	player_i.is_player_enabled = false
-	return player_i

@@ -1,0 +1,42 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=9 format=2]
+
+[sub_resource type="AnimationNodeAdd2" id=1]
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "look_down"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "look_up"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "run"
+
+[sub_resource type="AnimationNodeBlend2" id=5]
+
+[sub_resource type="AnimationNodeTimeScale" id=11]
+
+[sub_resource type="AnimationNodeBlend2" id=8]
+
+[resource]
+graph_offset = Vector2( 38, -251.48 )
+nodes/Add2/node = SubResource( 1 )
+nodes/Add2/position = Vector2( 960, -140 )
+"nodes/Idle State/node" = SubResource( 7 )
+"nodes/Idle State/position" = Vector2( 120, -260 )
+"nodes/Look Down/node" = SubResource( 2 )
+"nodes/Look Down/position" = Vector2( 120, 180 )
+"nodes/Look Up/node" = SubResource( 4 )
+"nodes/Look Up/position" = Vector2( 140, 40 )
+"nodes/Run State/node" = SubResource( 3 )
+"nodes/Run State/position" = Vector2( 120, -140 )
+nodes/look_up_scale/node = SubResource( 5 )
+nodes/look_up_scale/position = Vector2( 400, 80 )
+nodes/output/position = Vector2( 1380, -140 )
+nodes/run_anim_scale/node = SubResource( 11 )
+nodes/run_anim_scale/position = Vector2( 600, -160 )
+nodes/run_speed/node = SubResource( 8 )
+nodes/run_speed/position = Vector2( 360, -200 )
+node_connections = [ "output", 0, "Add2", "look_up_scale", 0, "Look Up", "look_up_scale", 1, "Look Down", "run_anim_scale", 0, "run_speed", "Add2", 0, "run_anim_scale", "Add2", 1, "look_up_scale", "run_speed", 0, "Idle State", "run_speed", 1, "Run State" ]
