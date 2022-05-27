@@ -84,16 +84,25 @@ func _ready():
 	spread_recovery_timer.connect("timeout", self, "_on_SpreadRecoveryTimer_timeout")
 	WeaponSingleton.connect("current_weapon_changed", self, "_current_weapon_changed")
 	WeaponSingleton.connect("camera_aim", self, "_camera_aim")
+	
+	# Wait one frame before checking if we are the master of this node
+	# Otherwise it won't be defined yet
+	yield(get_tree(), "idle_frame")
+	
+	print(is_network_master())
+	
+	if !is_network_master():
+		$Model.layers = 2
 
 
 func _current_weapon_changed(curr: Weapon):
 	if is_network_master():
-		rpc("enable_weapon", curr.name)
+		rpc("enable_weapon", curr.name == name)
 
 
-remotesync func enable_weapon(current_weapon_name):
+remotesync func enable_weapon(enabled: bool):
+	is_current = enabled
 	WeaponSingleton.aim(false)
-	is_current = current_weapon_name == name
 	anim.stop()
 	rpc("play_anim_synced", "switch_to")
 	is_reloading = false
@@ -259,3 +268,6 @@ func apply_ammo(ammo_stats):
 
 func _camera_aim(is_aiming: bool):
 	$Model.visible = !is_aiming or !is_scoped
+
+func get_model() -> MeshInstance:
+	return $Model as MeshInstance

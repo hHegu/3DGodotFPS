@@ -166,6 +166,7 @@ hand_aim_position = Vector3( 0, -0.09, -0.579 )
 [node name="Model" type="MeshInstance" parent="."]
 transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )
 layers = 4
+cast_shadow = 0
 mesh = ExtResource( 2 )
 skeleton = NodePath("../..")
 material/0 = null

@@ -5,18 +5,33 @@
 
 [node name="lowpoly_human" instance=ExtResource( 1 )]
 
+[node name="Armature" parent="." index="2"]
+transform = Transform( -0.13, -1.96295e-08, 8.58031e-16, 0, -5.68248e-09, -0.13, 1.96295e-08, -0.13, 5.68248e-09, 0, 0, 0 )
+
 [node name="Cube" parent="Armature/Skeleton" index="0"]
 layers = 2
 
+[node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
+transform = Transform( -0.905575, -0.423266, -0.0279285, 0.409722, -0.855749, -0.315948, 0.10983, -0.297557, 0.948366, 0.830079, -2.45975, -9.78993 )
+bone_name = "hand.R"
+
+[node name="Hand" type="Spatial" parent="Armature/Skeleton/BoneAttachment" index="0"]
+transform = Transform( 1, 1.49012e-07, 1.04308e-07, 0, 1, 8.9407e-08, -4.47035e-08, 1.78814e-07, 1, -0.353588, 1.78914, -0.220115 )
+
+[node name="WeaponModel" type="MeshInstance" parent="Armature/Skeleton/BoneAttachment/Hand" index="0"]
+transform = Transform( 55.7277, -6.75879, -25.2136, 26.0472, 18.3112, 52.6614, 1.71868, -58.3609, 19.4429, 0, 0, 0 )
+layers = 2
+skeleton = NodePath("../../../../..")
+
 [node name="AnimationPlayer" parent="." index="3"]
 autoplay = "run"
-playback_default_blend_time = 0.1
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
 tree_root = ExtResource( 2 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/Add2/add_amount = 1.0
+"parameters/Add2 2/add_amount" = 1.0
 parameters/look_up_scale/blend_amount = 0.51
-parameters/run_anim_scale/scale = 1.5
+parameters/run_anim_scale/scale = 2.0
 parameters/run_speed/blend_amount = 0.0

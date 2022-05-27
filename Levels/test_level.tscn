@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Menus/PauseMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Targets/TargetPractice.tscn" type="PackedScene" id=3]
 [ext_resource path="res://environment.tres" type="Environment" id=4]
 [ext_resource path="res://Objects/WeaponWall.tscn" type="PackedScene" id=5]
-[ext_resource path="res://lowpoly_human2.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Levels/Level.gd" type="Script" id=8]
 
 [sub_resource type="SpatialMaterial" id=1]
@@ -17,56 +16,62 @@ script = ExtResource( 8 )
 [node name="Ground" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0 )
 use_collision = true
-width = 40.0978
+width = 51.0374
 height = 0.5
-depth = 42.9501
-material = SubResource( 1 )
-
-[node name="Wall" type="CSGBox" parent="Ground"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.44383, 1.37151, 0.868725 )
-use_collision = true
-width = 0.42087
-height = 2.21611
-depth = 9.24874
-material = SubResource( 1 )
-
-[node name="Wall4" type="CSGBox" parent="Ground"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8916, 1.37151, -0.205914 )
-use_collision = true
-width = 0.42087
-height = 2.21611
-depth = 10.0
-material = SubResource( 1 )
-
-[node name="Wall6" type="CSGBox" parent="Ground"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.1596, 1.37151, -5.42463 )
-use_collision = true
-width = 0.42087
-height = 2.21611
-depth = 10.0
-material = SubResource( 1 )
-
-[node name="Wall5" type="CSGBox" parent="Ground"]
-transform = Transform( 0.0701395, 0, 0.997537, 0, 1, 0, -0.997537, 0, 0.0701395, -9.67692, 1.37151, 4.95142 )
-use_collision = true
-width = 0.42087
-height = 2.21611
-depth = 10.0
-material = SubResource( 1 )
-
-[node name="Wall3" type="CSGBox" parent="Ground"]
-transform = Transform( 0.535591, -0.844478, 0, 0.844478, 0.535591, 0, 0, 0, 1, 7.98592, 1.37151, 0 )
-use_collision = true
-width = 0.42087
-height = 10.6409
-depth = 10.0
+depth = 69.8388
 material = SubResource( 1 )
 
 [node name="Wall2" type="CSGBox" parent="Ground"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62319, 0.0335935, 0 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.62319, 0.0335935, 2 )
 use_collision = true
 width = 0.42087
-depth = 2.70512
+depth = 30.0
+material = SubResource( 1 )
+
+[node name="Wall4" type="CSGBox" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.957, 3.24495, 2 )
+use_collision = true
+width = 0.42087
+height = 6.0
+depth = 67.1567
+material = SubResource( 1 )
+
+[node name="Wall5" type="CSGBox" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.69158, 3.24495, 2 )
+use_collision = true
+width = 0.42087
+height = 6.0
+depth = 67.1567
+material = SubResource( 1 )
+
+[node name="Wall6" type="CSGBox" parent="Ground"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.10996, 3.24495, 14.5823 )
+use_collision = true
+width = 0.42087
+height = 6.0
+depth = 67.1567
+material = SubResource( 1 )
+
+[node name="Wall7" type="CSGBox" parent="Ground"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.10996, 3.24495, -31.4059 )
+use_collision = true
+width = 0.42087
+height = 6.0
+depth = 67.1567
+material = SubResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.47508, 3.28488, -24.767 )
+width = 8.8578
+height = 6.0
+depth = 6.0
+material = SubResource( 1 )
+
+[node name="CSGBox2" type="CSGBox" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.91608, 9.30812, -26.577 )
+width = 5.70116
+height = 6.0
+depth = 2.37272
 material = SubResource( 1 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -74,9 +79,6 @@ transform = Transform( 0.707107, -0.671496, 0.221569, 0, 0.313346, 0.949639, -0.
 shadow_enabled = true
 shadow_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 directional_shadow_max_distance = 173.6
-
-[node name="TargetPractice" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.99725, 0, -3.66328 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 4 )
@@ -114,37 +116,76 @@ fit_content_height = true
 [node name="BlueTeam" type="Node" parent="SpawnPositions"]
 
 [node name="Position3D" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2521, 0.242309, 3.4828 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2521, 0.242309, 7.4828 )
 
 [node name="Position3D2" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2521, 0.242309, 2.40313 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2521, 0.242309, 6.40313 )
 
 [node name="Position3D3" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9604, 0.242309, 2.40313 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9604, 0.242309, 6.40313 )
 
 [node name="Position3D4" type="Position3D" parent="SpawnPositions/BlueTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9604, 0.242309, 3.4103 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9604, 0.242309, 7.4103 )
 
 [node name="RedTeam" type="Node" parent="SpawnPositions"]
 
 [node name="Position3D" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51365, 0.242309, -0.748029 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48635, 0.242309, 6.25197 )
 
 [node name="Position3D2" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51365, 0.242309, 0.735771 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48635, 0.242309, 7.73577 )
 
 [node name="Position3D3" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13892, 0.242309, 0.735771 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86108, 0.242309, 7.73577 )
 
 [node name="Position3D4" type="Position3D" parent="SpawnPositions/RedTeam"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13892, 0.242309, -0.812029 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.86108, 0.242309, 6.18797 )
+
+[node name="Targets" type="Node" parent="."]
+
+[node name="TargetPractice" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.86382, 0, -14.5282 )
+
+[node name="TargetPractice9" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -17.0737, 0, -21.5051 )
+
+[node name="TargetPractice10" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.73625, 0, -3.29588 )
+
+[node name="TargetPractice11" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6.14849, 0, -6.78329 )
+
+[node name="TargetPractice2" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.12618, 0, -14.5282 )
+
+[node name="TargetPractice3" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.516543, 0, -20.2469 )
+
+[node name="TargetPractice4" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.985764, 0, -28.1759 )
+
+[node name="TargetPractice7" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.82446, 11.9827, -25.9247 )
+
+[node name="TargetPractice13" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -8.60013, 11.9827, -25.9247 )
+
+[node name="TargetPractice8" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -8.85014, 6.04847, -22.7721 )
+
+[node name="TargetPractice12" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5.57517, 6.04847, -22.7721 )
+
+[node name="TargetPractice5" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.11874, 0, -27.6942 )
+
+[node name="TargetPractice6" parent="Targets" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.33702, 0, -25.1366 )
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 
 [node name="PauseMenu" parent="." instance=ExtResource( 1 )]
 
 [node name="WeaponWall" parent="." instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8, 0, 4 )
 weapons = [ 0, 2, 1, 3, 0, 1, 0, 2, 3, 1, 0 ]
-
-[node name="lowpoly_human" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3855, -9.53674e-07, -10.4473 )

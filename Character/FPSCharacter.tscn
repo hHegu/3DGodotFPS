@@ -7,7 +7,8 @@
 [ext_resource path="res://RigAnimationController.gd" type="Script" id=5]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 0.4
+radius = 0.3
+height = 1.36577
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -75,7 +76,7 @@ script = ExtResource( 1 )
 weapons = [ 3, 1, 2 ]
 
 [node name="Body" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.06149, -0.0395279 )
 shape = SubResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
@@ -134,29 +135,12 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[node name="Model" type="Spatial" parent="."]
-visible = false
-
-[node name="CSGCylinder" type="CSGCylinder" parent="Model"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.745033, 0 )
-layers = 2
-radius = 0.319
-height = 1.46845
-__meta__ = {
-"_editor_description_": ""
-}
-
-[node name="CSGSphere" type="CSGSphere" parent="Model"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.68612, 0 )
-layers = 2
-radius = 0.25
-
 [node name="NetworkUtils" type="Node" parent="."]
 
 [node name="PositionTween" type="Tween" parent="NetworkUtils"]
 
 [node name="lowpoly_human" parent="." instance=ExtResource( 2 )]
-transform = Transform( -0.13, 0, -1.1365e-08, 0, 0.13, 0, 1.1365e-08, 0, -0.13, 0, 0, 0 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.1, 0 )
 script = ExtResource( 5 )
 
 [connection signal="tween_all_completed" from="RecoilTween" to="." method="_on_RecoilTween_tween_all_completed"]

@@ -54,18 +54,17 @@ func _ready():
 	camera.connect("weapon_picked_up", self, "_weapon_picked_up")
 	set_physics_process(false)
 	set_process(false)
-	
+
 	# Wait one frame before checking if we are the master of this node
 	# Otherwise it won't be defined yet
 	yield(get_tree(), "idle_frame")
-	
-	set_physics_process(get_network_master())
-	set_process(get_network_master())
+
+	set_physics_process(is_network_master())
+	set_process(is_network_master())
 
 	initial_body_height = body.shape.height
 	initial_pivot_height = pivot.translation.y
 
-	
 
 	for weapon in weapons:
 		var weapon_i = Weapons.get_weapon_instance(weapon)
@@ -85,12 +84,10 @@ func _ready():
 func _make_body_visible_for_other_than_owner():
 	if not is_network_master():
 		$lowpoly_human/Armature/Skeleton/Cube.layers = 1
-		for body_part in $Model.get_children():
-			body_part.layers = 1
+		$lowpoly_human/Armature/Skeleton/BoneAttachment/Hand/WeaponModel.layers = 1
 
 
 func set_player_health(new_health):
-	print(player_health)
 	# If player is already dead
 	if player_health == 0:
 		player_health = max(0, new_health)
@@ -148,7 +145,7 @@ func get_movement_speed():
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("previous_weapon") and is_network_master():
+	if Input.is_action_just_pressed("previous_weapon"):
 		change_weapon(prev_weapon_index)
 	
 	var pressed_weapon_id = get_pressed_weapon_id()
@@ -245,6 +242,12 @@ func change_weapon(weapon_index: int):
 		current_weapon = hand.get_child(weapon_index)
 		current_weapon_index = weapon_index
 		WeaponSingleton.change_weapon(current_weapon)
+		rpc("sync_current_weapon", weapon_index)
+
+
+remote func sync_current_weapon(weapon_index):
+	current_weapon = hand.get_child(weapon_index)
+	current_weapon_index = weapon_index
 
 
 var vertical_target_recoil: float = 0
@@ -330,7 +333,6 @@ func _weapon_picked_up(weapon_i: Weapon):
 	rpc("sync_wepon_pickup", weapon_i.weapon_id, current_weapon_index)
 
 remotesync func drop_old_weapon(weapon_drop_id, weapon_enum_id, weapon_ammo_stats):
-	print(weapon_ammo_stats)
 	var weapon_pickup_i: WeaponPickup = weapon_pickup.instance()
 	weapon_pickup_i.name = weapon_drop_id
 	weapon_pickup_i.weapon_i = Weapons.get_weapon_instance(weapon_enum_id)
@@ -338,7 +340,6 @@ remotesync func drop_old_weapon(weapon_drop_id, weapon_enum_id, weapon_ammo_stat
 	weapon_pickup_i.weapon_i.name = "w_" + weapon_drop_id
 	weapon_pickup_i.transform.origin = hand.global_transform.origin
 	weapon_pickup_i.mode = RigidBody.MODE_RIGID
-#	weapon_pickup_i.look_at_from_position(transform.origin, Vector3.FORWARD, Vector3.UP)
 	get_tree().get_root().add_child(weapon_pickup_i)
 	var forward_vector = Vector3.FORWARD.rotated(Vector3.UP, rotation.y) * -1
 	weapon_pickup_i.look_at(forward_vector * 10, Vector3.UP)
