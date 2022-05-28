@@ -35,7 +35,6 @@ func _ready():
 	for i in weapons.size():
 		var location = spawn_locations[i]
 		rpc("_add_weapon_pickup", weapons[i], location, Utils.uuid('weapon'))
-#		_add_weapon_pickup(weapons[i], location)
 
 
 remotesync func _add_weapon_pickup(weapon_index: int, position: Vector3, name: String):

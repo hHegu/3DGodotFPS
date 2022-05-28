@@ -1,14 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Character/FPSCharacter.gd" type="Script" id=1]
 [ext_resource path="res://lowpoly_human2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Character/WeaponPivot.gd" type="Script" id=3]
 [ext_resource path="res://Character/PlayerCamera.gd" type="Script" id=4]
 [ext_resource path="res://RigAnimationController.gd" type="Script" id=5]
-
-[sub_resource type="CapsuleShape" id=1]
-radius = 0.3
-height = 1.36577
+[ext_resource path="res://Materials/Red.tres" type="Material" id=6]
+[ext_resource path="res://Materials/Blue.tres" type="Material" id=7]
+[ext_resource path="res://Targets/Target.gd" type="Script" id=8]
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -70,14 +69,19 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0.0195584, -0.0221697, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
+[sub_resource type="SphereShape" id=7]
+radius = 0.257268
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.355379
+height = 1.23363
+
 [node name="FPSCharacter" type="KinematicBody"]
 collision_layer = 4
 script = ExtResource( 1 )
-weapons = [ 3, 1, 2 ]
-
-[node name="Body" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.06149, -0.0395279 )
-shape = SubResource( 1 )
+weapons = [ 2, 2 ]
+red_team_color = ExtResource( 6 )
+blue_team_color = ExtResource( 7 )
 
 [node name="Pivot" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55383, 0 )
@@ -142,5 +146,30 @@ one_shot = true
 [node name="lowpoly_human" parent="." instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.1, 0 )
 script = ExtResource( 5 )
+
+[node name="HeadArea" type="Area" parent="."]
+collision_layer = 16
+collision_mask = 17
+script = ExtResource( 8 )
+damage_multiplier = 1.5
+hitmark_type = 1
+
+[node name="Head" type="CollisionShape" parent="HeadArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.87768, -0.086629 )
+shape = SubResource( 7 )
+
+[node name="BodyArea" type="Area" parent="."]
+collision_layer = 16
+collision_mask = 17
+script = ExtResource( 8 )
+
+[node name="Body" type="CollisionShape" parent="BodyArea"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.825914, -0.0395279 )
+shape = SubResource( 1 )
+
+[node name="Body" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.05038, -0.0395279 )
+shape = SubResource( 1 )
+script = ExtResource( 8 )
 
 [connection signal="tween_all_completed" from="RecoilTween" to="." method="_on_RecoilTween_tween_all_completed"]

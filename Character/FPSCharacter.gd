@@ -25,6 +25,9 @@ export var crouch_height := 0.5
 
 export(Array, Enums.WEAPONS_ENUM) var weapons: Array
 
+export(Material) var red_team_color
+export(Material) var blue_team_color
+
 var current_weapon: Weapon
 var current_weapon_index: int = 0
 var prev_weapon_index: int = 1
@@ -51,6 +54,8 @@ var weapon_pickup = preload("res://Objects/WeaponPickup.tscn")
 
 func _ready():
 	WeaponSingleton.connect("weapon_was_fired", self, "on_weapon_was_fired")
+	$BodyArea.connect("was_hit", self, "take_damage")
+	$HeadArea.connect("was_hit", self, "take_damage")
 	camera.connect("weapon_picked_up", self, "_weapon_picked_up")
 	set_physics_process(false)
 	set_process(false)
@@ -79,6 +84,7 @@ func _ready():
 		WeaponSingleton.change_weapon(current_weapon)
 
 	_make_body_visible_for_other_than_owner()
+	set_team_color()
 
 
 func _make_body_visible_for_other_than_owner():
@@ -88,6 +94,9 @@ func _make_body_visible_for_other_than_owner():
 
 
 func set_player_health(new_health):
+	if is_network_master():
+		HUDSingleton.set_hud_healt(new_health)
+
 	# If player is already dead
 	if player_health == 0:
 		player_health = max(0, new_health)
@@ -98,8 +107,7 @@ func set_player_health(new_health):
 	if player_health == 0:
 		death()
 
-	if is_network_master():
-		HUDSingleton.set_hud_healt(player_health)
+
 
 
 func death():
@@ -339,7 +347,7 @@ remotesync func drop_old_weapon(weapon_drop_id, weapon_enum_id, weapon_ammo_stat
 	weapon_pickup_i.weapon_i.apply_ammo(weapon_ammo_stats)
 	weapon_pickup_i.weapon_i.name = "w_" + weapon_drop_id
 	weapon_pickup_i.transform.origin = hand.global_transform.origin
-	weapon_pickup_i.mode = RigidBody.MODE_RIGID
+	weapon_pickup_i.weapon_dropped()
 	get_tree().get_root().add_child(weapon_pickup_i)
 	var forward_vector = Vector3.FORWARD.rotated(Vector3.UP, rotation.y) * -1
 	weapon_pickup_i.look_at(forward_vector * 10, Vector3.UP)
@@ -352,3 +360,8 @@ remote func sync_wepon_pickup(weapon_enum_id, weapon_index):
 	hand.add_child_below_node(old_weapon, weapon_i)
 	hand.remove_child(old_weapon)
 	weapon_i.set_network_master(get_network_master())
+
+
+func set_team_color():
+	var team_material = blue_team_color if Lobby.players[get_network_master()].team == Enums.TEAMS.BLUE else red_team_color
+	$lowpoly_human/Armature/Skeleton/Cube.material_override = team_material

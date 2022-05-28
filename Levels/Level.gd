@@ -43,7 +43,7 @@ func _spawn_players():
 	for player_id in Lobby.players:
 		var team = Lobby.players[player_id].team
 		var spawn_point = get_random_spawn_point_for_team(team)
-		rpc("spawn_player", player_id, spawn_point.transform.origin)
+		rpc("spawn_player", player_id, spawn_point.transform.origin, spawn_point.rotation)
 
 
 func get_random_spawn_point_for_team(team: int):
@@ -56,9 +56,10 @@ func get_random_spawn_point_for_team(team: int):
 	return spawn_point
 
 
-remotesync func spawn_player(player_id, position):
+remotesync func spawn_player(player_id, position: Vector3, rotation: Vector3):
 	var player: KinematicBody = Players.get_node(str(player_id))
 	player.transform.origin = position
+	player.rotation = rotation
 
 
 remotesync func _start_match():
@@ -94,13 +95,13 @@ func respawn(player_id):
 
 	var player = Lobby.players[player_id]
 	var spawn_point = get_random_spawn_point_for_team(player.team)
-	rpc("sync_respawn_player", player_id, spawn_point.transform.origin)
+	rpc("sync_respawn_player", player_id, spawn_point.transform.origin, spawn_point.rotation)
 	player_node.toggle_player_control(true)
 	player_node.toggle_player_camera(true)
 
 
-remotesync func sync_respawn_player(player_id, position):
-	spawn_player(player_id, position)
+remotesync func sync_respawn_player(player_id, position, rotation):
+	spawn_player(player_id, position, rotation)
 	var player_node: Player = Players.get_node(str(player_id))
 	player_node.visible = true
 	player_node.body.disabled = false

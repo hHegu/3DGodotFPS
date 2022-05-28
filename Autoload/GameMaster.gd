@@ -9,7 +9,7 @@ signal round_started
 signal player_died
 
 
-remotesync func start_game(level := "res://Levels/test_level.tscn"):
+remotesync func start_game(level := "res://Levels/Level1.tscn"):
 	_initiate_players()
 	get_tree().change_scene(level)
 	current_level = get_tree().current_scene

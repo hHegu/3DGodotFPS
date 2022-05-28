@@ -48,4 +48,4 @@ nodes/run_anim_scale/node = SubResource( 11 )
 nodes/run_anim_scale/position = Vector2( 600, -160 )
 nodes/run_speed/node = SubResource( 8 )
 nodes/run_speed/position = Vector2( 360, -200 )
-node_connections = [ "output", 0, "Add2 2", "look_up_scale", 0, "Look Up", "look_up_scale", 1, "Look Down", "run_speed", 0, "Idle State", "run_speed", 1, "Run State", "Add2", 0, "run_anim_scale", "Add2", 1, "look_up_scale", "run_anim_scale", 0, "run_speed", "Add2 2", 0, "Aim", "Add2 2", 1, "Add2" ]
+node_connections = [ "output", 0, "Add2 2", "look_up_scale", 0, "Look Up", "look_up_scale", 1, "Look Down", "Add2", 0, "run_anim_scale", "Add2", 1, "look_up_scale", "run_anim_scale", 0, "run_speed", "Add2 2", 0, "Aim", "Add2 2", 1, "Add2", "run_speed", 0, "Idle State", "run_speed", 1, "Run State" ]

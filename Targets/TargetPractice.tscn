@@ -57,11 +57,9 @@ tracks/0/keys = {
 }
 
 [node name="TargetPractice" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="Model" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="Head" type="CSGBox" parent="Model"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.53909, -0.100826 )

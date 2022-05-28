@@ -190,7 +190,7 @@ func get_random_point_in_a_circle(r: float) -> Vector2:
 
 func fire_bullet(from: Vector3, to: Vector3) -> void:
 	var player = get_owner_player()
-	var result = get_world().direct_space_state.intersect_ray(from, to, [self, player])
+	var result = get_world().direct_space_state.intersect_ray(from, to, [self, player], 1 + 16, true, true)
 
 	if result and result.collider and result.collider.has_method('take_damage'):
 		var hitmark_type = result.collider.take_damage(damage)

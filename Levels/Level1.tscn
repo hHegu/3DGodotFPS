@@ -1,0 +1,558 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Levels/LevelBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://lowpoly_human2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/HoveringWeapon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Materials/Rock.tres" type="Material" id=4]
+[ext_resource path="res://Materials/Stone.tres" type="Material" id=5]
+[ext_resource path="res://Materials/Sand.tres" type="Material" id=6]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.545098, 0.607843, 0.705882, 1 )
+
+[sub_resource type="BoxShape" id=4]
+
+[node name="Level" instance=ExtResource( 1 )]
+
+[node name="LevelCamera" parent="." index="2"]
+transform = Transform( 0.999356, -0.0275564, 0.022973, 0.00285602, 0.699412, 0.714713, -0.0357625, -0.714187, 0.69904, 6.88321, 21.3526, 28.1447 )
+
+[node name="Position3D" parent="SpawnPositions/BlueTeam" index="0"]
+transform = Transform( 0.0992503, 0, -0.995063, 0, 1, 0, 0.995063, 0, 0.0992503, -5.49217, 0.242309, 22.793 )
+
+[node name="Position3D2" parent="SpawnPositions/BlueTeam" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.81, 4.30408, 12.1341 )
+
+[node name="Position3D3" parent="SpawnPositions/BlueTeam" index="2"]
+transform = Transform( -0.115787, 0, 0.993274, 0, 1, 0, -0.993274, 0, -0.115787, 2.34352, 0.242309, 7.63855 )
+
+[node name="Position3D4" parent="SpawnPositions/BlueTeam" index="3"]
+transform = Transform( 0.878233, 0, -0.478232, 0, 1, 0, 0.478232, 0, 0.878233, 18.69, 0.242309, 19.0222 )
+
+[node name="Position3D5" type="Position3D" parent="SpawnPositions/BlueTeam" index="4"]
+transform = Transform( 0.00846479, 0, 0.999964, 0, 1, 0, -0.999964, 0, 0.00846479, 5.51514, 0.413062, -0.549549 )
+
+[node name="Position3D6" type="Position3D" parent="SpawnPositions/BlueTeam" index="5"]
+transform = Transform( -0.0084647, 0, -0.999964, 0, 1, 0, 0.999964, 0, -0.0084647, 13.46, 7.51256, 0.499475 )
+
+[node name="Position3D" parent="SpawnPositions/RedTeam" index="0"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 23.3812, 4.82542, 2.12761 )
+
+[node name="Position3D2" parent="SpawnPositions/RedTeam" index="1"]
+transform = Transform( -0.777179, 0, 0.62928, 0, 1, 0, -0.62928, 0, -0.777179, 15.8814, 0.67478, -23.13 )
+
+[node name="Position3D3" parent="SpawnPositions/RedTeam" index="2"]
+transform = Transform( -0.999731, 0, 0.0231759, 0, 1, 0, -0.0231759, 0, -0.999731, -11.9421, 0.242309, -3.77431 )
+
+[node name="Position3D4" parent="SpawnPositions/RedTeam" index="3"]
+transform = Transform( -0.99924, 0, 0.0389808, 0, 1, 0, -0.0389808, 0, -0.99924, 4.09519, 0.242309, -25.4262 )
+
+[node name="Position3D5" type="Position3D" parent="SpawnPositions/RedTeam" index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9474, 0.660512, 1.83734 )
+
+[node name="Position3D6" type="Position3D" parent="SpawnPositions/RedTeam" index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.80597, 4.40586, 1.61583 )
+
+[node name="Terrain" type="Node" parent="." index="7"]
+
+[node name="Ground" type="CSGBox" parent="Terrain" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0 )
+use_collision = true
+width = 61.4739
+height = 0.5
+depth = 55.6771
+material = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CSGBox2" type="CSGBox" parent="Terrain" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.2589, 1.9172, 6.0019 )
+use_collision = true
+width = 3.43962
+height = 4.23906
+depth = 13.2815
+material = ExtResource( 4 )
+
+[node name="CSGBox22" type="CSGBox" parent="Terrain" index="2"]
+transform = Transform( 0.953769, 0, 0.300539, 0, 1, 0, -0.300539, 0, 0.953769, -18.3692, 1.9172, 18.3736 )
+use_collision = true
+width = 3.43962
+height = 4.23906
+depth = 13.2815
+material = ExtResource( 4 )
+
+[node name="CSGBox21" type="CSGBox" parent="Terrain" index="3"]
+transform = Transform( 0.940276, 0, -0.340412, 0, 1, 0, 0.340412, 0, 0.940276, -18.1072, 1.9172, -6.22914 )
+use_collision = true
+width = 3.43962
+height = 4.23906
+depth = 13.2815
+material = ExtResource( 4 )
+
+[node name="CSGBox23" type="CSGBox" parent="Terrain" index="4"]
+transform = Transform( 1, 0, 0, 0, 3.93663, 0, 0, 0, 1, -23.7329, 1.9172, 6.0019 )
+use_collision = true
+width = 3.43962
+height = 4.23906
+depth = 13.2815
+material = ExtResource( 4 )
+
+[node name="CSGBox24" type="CSGBox" parent="Terrain" index="5"]
+transform = Transform( 0.953769, 0, 0.300539, 0, 3.93663, 0, -0.300539, 0, 0.953769, -21.8432, 1.9172, 18.6311 )
+use_collision = true
+width = 3.43962
+height = 6.48729
+depth = 14.8208
+material = ExtResource( 4 )
+
+[node name="CSGBox26" type="CSGBox" parent="Terrain" index="6"]
+transform = Transform( 0.160794, 0, 0.986988, 0, 3.93663, 0, -0.986988, 0, 0.160794, -13.5598, 4.97792, 25.7125 )
+use_collision = true
+width = 3.43962
+height = 7.21402
+depth = 14.8208
+material = ExtResource( 4 )
+
+[node name="CSGBox28" type="CSGBox" parent="Terrain" index="7"]
+transform = Transform( -0.897305, 0, 0.441412, 0, 3.93663, 0, -0.441412, 0, -0.897305, 25.0649, 1.9172, 21.8222 )
+use_collision = true
+width = 3.43962
+height = 4.23906
+depth = 14.8208
+material = ExtResource( 4 )
+
+[node name="CSGBox29" type="CSGBox" parent="Terrain" index="8"]
+transform = Transform( -0.99998, 0, -0.00637042, 0, 3.93663, 0, 0.00637042, 0, -0.99998, 28.1086, 1.9172, 0.900079 )
+use_collision = true
+width = 3.43962
+height = 4.23906
+depth = 30.3666
+material = ExtResource( 4 )
+
+[node name="CSGBox30" type="CSGBox" parent="Terrain" index="9"]
+transform = Transform( -0.899237, 0, -0.437461, 0, 3.93663, 0, 0.437461, 0, -0.899237, 24.4734, 4.06459, -21.4188 )
+use_collision = true
+width = 3.3735
+height = 2.25962
+depth = 18.8194
+material = ExtResource( 4 )
+
+[node name="CSGBox31" type="CSGBox" parent="Terrain" index="10"]
+transform = Transform( -0.0172255, 0, -0.999852, 0, 3.93663, 0, 0.999852, 0, -0.0172255, 6.74015, 1.82034, -28.7694 )
+use_collision = true
+width = 3.3735
+height = 1.31739
+depth = 30.0057
+material = ExtResource( 4 )
+
+[node name="CSGBox32" type="CSGBox" parent="Terrain" index="11"]
+transform = Transform( 0.784214, 0, -0.620491, 0, 3.93663, 0, 0.620491, 0, 0.784214, -13.0623, 3.65145, -20.5309 )
+use_collision = true
+width = 3.3735
+height = 2.05199
+depth = 22.9032
+material = ExtResource( 4 )
+
+[node name="CSGBox27" type="CSGBox" parent="Terrain" index="12"]
+transform = Transform( -0.0186564, 0, 0.999826, 0, 3.93663, 0, -0.999826, 0, -0.0186564, 7.90067, 4.38016, 26.5356 )
+use_collision = true
+width = 3.43962
+height = 2.66724
+depth = 27.8293
+material = ExtResource( 4 )
+
+[node name="CSGBox48" type="CSGBox" parent="Terrain" index="13"]
+transform = Transform( -0.0186564, 0, 0.999826, 0, 3.93663, 0, -0.999826, 0, -0.0186564, -3.20381, 4.38016, 26.5356 )
+use_collision = true
+width = 3.43962
+height = 4.95082
+depth = 12.4712
+material = ExtResource( 4 )
+
+[node name="CSGBox25" type="CSGBox" parent="Terrain" index="14"]
+transform = Transform( 0.940276, 0, -0.340412, 0, 3.93663, 0, 0.340412, 0, 0.940276, -21.5812, 1.9172, -6.22914 )
+use_collision = true
+width = 3.43962
+height = 4.23906
+depth = 13.2815
+material = ExtResource( 4 )
+
+[node name="CSGBox3" type="CSGBox" parent="Terrain" index="15"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, -5.89854, 1.9172, 1.05048 )
+use_collision = true
+width = 6.29861
+height = 4.23906
+depth = 13.2815
+material = ExtResource( 4 )
+
+[node name="CSGBox10" type="CSGBox" parent="Terrain" index="16"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, -6.98057, 1.2558, 7.39749 )
+use_collision = true
+width = 2.83526
+height = 3.06683
+depth = 4.42827
+material = ExtResource( 4 )
+
+[node name="CSGBox39" type="CSGBox" parent="Terrain" index="17"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, -6.98057, -0.191106, 19.1865 )
+use_collision = true
+width = 13.4369
+height = 11.3487
+depth = 2.09084
+material = ExtResource( 4 )
+
+[node name="CSGBox40" type="CSGBox" parent="Terrain" index="18"]
+transform = Transform( 1, 0, 0, 0, 0.358726, -0.756869, 0, 0.933443, 0.290868, -6.98057, 6.95972, 24.4506 )
+use_collision = true
+width = 13.4369
+height = 12.5652
+depth = 2.09084
+material = ExtResource( 4 )
+
+[node name="CSGBox5" type="CSGBox" parent="Terrain" index="19"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 0.0398505, 1.93522, 3.97032 )
+use_collision = true
+width = 5.73926
+height = 4.23906
+depth = 6.0
+material = ExtResource( 4 )
+
+[node name="CSGBox9" type="CSGBox" parent="Terrain" index="20"]
+transform = Transform( 0.888569, 0.458743, 0, -0.458743, 0.888569, 0, 0, 0, 0.810836, -2.57449, -0.391404, 6.78107 )
+use_collision = true
+width = 5.92558
+height = 3.29287
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox6" type="CSGBox" parent="Terrain" index="21"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 9.46392, 1.9172, -3.30677 )
+use_collision = true
+width = 12.7818
+height = 4.23906
+depth = 2.28557
+material = ExtResource( 4 )
+
+[node name="CSGBox33" type="CSGBox" parent="Terrain" index="22"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 3.98667, 2.87873, -16.0199 )
+use_collision = true
+width = 8.43669
+height = 7.08791
+depth = 5.71017
+material = ExtResource( 4 )
+
+[node name="CSGBox37" type="CSGBox" parent="Terrain" index="23"]
+transform = Transform( 0.907873, 0, -0.33994, 0, 1, 0, 0.419246, 0, 0.736136, 11.669, 1.99532, -14.9794 )
+use_collision = true
+width = 9.14447
+height = 7.08791
+depth = 3.78097
+material = ExtResource( 4 )
+
+[node name="CSGBox35" type="CSGBox" parent="Terrain" index="24"]
+transform = Transform( 0.780059, 0, -0.507345, 0, 1, 0, 0.625706, 0, 0.6325, 16.0645, 0.77043, -12.6028 )
+use_collision = true
+height = 1.99609
+material = ExtResource( 4 )
+
+[node name="CSGBox38" type="CSGBox" parent="Terrain" index="25"]
+transform = Transform( 0.662346, 0, -0.607477, 0, 1, 0, 0.749199, 0, 0.537054, 20.3524, 0.733481, -5.7868 )
+use_collision = true
+height = 1.99609
+material = ExtResource( 4 )
+
+[node name="CSGBox36" type="CSGBox" parent="Terrain" index="26"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 1.45524, 0.336736, -20.7364 )
+use_collision = true
+height = 2.5258
+material = ExtResource( 5 )
+
+[node name="CSGBox44" type="CSGBox" parent="Terrain" index="27"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, -5.31893, 4.18738, 3.98702 )
+use_collision = true
+height = 2.5258
+depth = 3.41935
+material = ExtResource( 4 )
+
+[node name="CSGBox45" type="CSGBox" parent="Terrain" index="28"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, -5.20114, 4.18738, 1.58905 )
+use_collision = true
+width = 1.58601
+height = 1.48604
+depth = 3.41935
+material = ExtResource( 4 )
+
+[node name="CSGBox34" type="CSGBox" parent="Terrain" index="29"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 3.42536, 0.358588, -19.2058 )
+use_collision = true
+width = 7.15299
+height = 7.08791
+depth = 2.69208
+material = ExtResource( 4 )
+
+[node name="CSGBox7" type="CSGBox" parent="Terrain" index="30"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 6.05251, 1.9172, 3.9523 )
+use_collision = true
+width = 6.29861
+height = 4.23906
+depth = 6.0
+material = ExtResource( 4 )
+
+[node name="CSGBox8" type="CSGBox" parent="Terrain" index="31"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 14.2489, 1.9172, 1.95909 )
+use_collision = true
+width = 3.23135
+height = 4.23906
+depth = 10.7392
+material = ExtResource( 4 )
+
+[node name="CSGBox11" type="CSGBox" parent="Terrain" index="32"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 23.314, 1.9172, 1.95909 )
+use_collision = true
+width = 6.64079
+height = 4.23906
+depth = 18.6946
+material = ExtResource( 4 )
+
+[node name="CSGBox41" type="CSGBox" parent="Terrain" index="33"]
+transform = Transform( 0.593714, 0, -0.65246, 0, 1, 0, 0.804676, 0, 0.481405, 14.8765, 1.9172, 16.8187 )
+use_collision = true
+width = 2.80781
+height = 4.23906
+depth = 13.194
+material = ExtResource( 4 )
+
+[node name="CSGBox4" type="CSGBox" parent="Terrain" index="34"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 4.5996, 5.1782, 1.05048 )
+use_collision = true
+width = 19.5519
+height = 2.3015
+depth = 13.2815
+material = ExtResource( 4 )
+
+[node name="CSGBox12" type="CSGBox" parent="Terrain" index="35"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 9.07009, 8.62063, -0.0579634 )
+use_collision = true
+width = 6.18687
+height = 4.70321
+depth = 7.77774
+material = ExtResource( 4 )
+
+[node name="CSGBox13" type="CSGBox" parent="Terrain" index="36"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 5.59773, 7.28681, -0.0579634 )
+use_collision = true
+width = 1.0
+height = 0.407009
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox46" type="CSGBox" parent="Terrain" index="37"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 5.59773, 5.40274, -18.7979 )
+use_collision = true
+width = 1.0
+height = 0.407009
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox47" type="CSGBox" parent="Terrain" index="38"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 5.59773, 2.29334, -20.6915 )
+use_collision = true
+width = 1.0
+height = 0.407009
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox14" type="CSGBox" parent="Terrain" index="39"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 5.51168, 8.57986, -2.24981 )
+visible = false
+use_collision = true
+width = 1.0
+height = 1.0
+depth = 1.0
+material = ExtResource( 4 )
+
+[node name="CSGBox15" type="CSGBox" parent="Terrain" index="40"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 5.51168, 9.79044, 2.14865 )
+use_collision = true
+width = 1.0
+height = 0.357542
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox42" type="CSGBox" parent="Terrain" index="41"]
+transform = Transform( 0.943686, 0, -0.26826, 0, 1, 0, 0.330844, 0, 0.765174, -14.7812, 1.21101, -12.3821 )
+use_collision = true
+width = 1.0
+height = 0.357542
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox43" type="CSGBox" parent="Terrain" index="42"]
+transform = Transform( 0.855382, 0, -0.420011, 0, 1, 0, 0.517997, 0, 0.693575, -16.1581, 2.79591, -12.8427 )
+use_collision = true
+width = 1.0
+height = 0.357542
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox16" type="CSGBox" parent="Terrain" index="43"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 9.37157, 9.79044, 3.37468 )
+use_collision = true
+width = 1.0
+height = 0.410285
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox17" type="CSGBox" parent="Terrain" index="44"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 8.03943, 7.35348, 3.37468 )
+use_collision = true
+width = 1.0
+height = 0.393105
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox18" type="CSGBox" parent="Terrain" index="45"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 8.03943, 4.15682, 6.68257 )
+use_collision = true
+width = 1.0
+height = 0.420298
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox19" type="CSGBox" parent="Terrain" index="46"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 5.596, 2.18976, 6.68257 )
+use_collision = true
+width = 1.0
+height = 0.403632
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="CSGBox20" type="CSGBox" parent="Terrain" index="47"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.810836, 2.07873, 3.95646, 6.68257 )
+use_collision = true
+width = 1.0
+height = 0.478256
+depth = 1.0
+material = ExtResource( 5 )
+
+[node name="Bridge" type="Spatial" parent="Terrain" index="48"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.7727, 3.14299, 2.54401 )
+
+[node name="Top" type="CSGBox" parent="Terrain/Bridge" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.736182, 0 )
+use_collision = true
+width = 9.54945
+height = 0.333814
+depth = 2.89149
+material = SubResource( 2 )
+
+[node name="CSGBox3" type="CSGBox" parent="Terrain/Bridge" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.29621, 0.25755, 0 )
+use_collision = true
+width = 0.937551
+height = 0.619703
+material = SubResource( 2 )
+
+[node name="CSGBox4" type="CSGBox" parent="Terrain/Bridge" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.29286, 0.25755, 0 )
+use_collision = true
+width = 0.937551
+height = 0.619703
+material = SubResource( 2 )
+
+[node name="Bridge3" type="Spatial" parent="Terrain" index="49"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.95844, 5.46488, -9.05518 )
+
+[node name="Top" type="CSGBox" parent="Terrain/Bridge3" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.736182, 0 )
+use_collision = true
+width = 9.54945
+height = 0.333814
+depth = 2.89149
+material = SubResource( 2 )
+
+[node name="CSGBox3" type="CSGBox" parent="Terrain/Bridge3" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.29621, 0.25755, 0 )
+use_collision = true
+width = 0.937551
+height = 0.619703
+material = SubResource( 2 )
+
+[node name="CSGBox4" type="CSGBox" parent="Terrain/Bridge3" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.29286, 0.25755, 0 )
+use_collision = true
+width = 0.937551
+height = 0.619703
+material = SubResource( 2 )
+
+[node name="Bridge2" type="Spatial" parent="Terrain" index="50"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.6567, 3.14299, 2.54401 )
+
+[node name="Top" type="CSGBox" parent="Terrain/Bridge2" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72418, 0.736182, 0 )
+use_collision = true
+width = 4.61619
+height = 0.333814
+depth = 2.89149
+material = SubResource( 2 )
+
+[node name="CSGBox3" type="CSGBox" parent="Terrain/Bridge2" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.29621, 0.25755, 0 )
+use_collision = true
+width = 0.937551
+height = 0.619703
+material = SubResource( 2 )
+
+[node name="CSGBox4" type="CSGBox" parent="Terrain/Bridge2" index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00885, 0.25755, 0 )
+use_collision = true
+width = 0.937551
+height = 0.619703
+material = SubResource( 2 )
+
+[node name="GroundBackup" type="StaticBody" parent="Terrain" index="51"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Terrain/GroundBackup" index="0"]
+transform = Transform( 26.2309, 0, 0, 0, 1, 0, 0, 0, 26.2309, 0, -0.987269, 0 )
+shape = SubResource( 4 )
+
+[node name="lowpoly_human" parent="." index="8" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.102928, 2.38419e-07, -3.20285 )
+
+[node name="HoveringWeapons" type="Node" parent="." index="9"]
+
+[node name="AssaultRifle" parent="HoveringWeapons" index="0" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.01534, 0, -9.33329 )
+
+[node name="AssaultRifle3" parent="HoveringWeapons" index="1" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.51015, 0, 13.1194 )
+
+[node name="AssaultRifle4" parent="HoveringWeapons" index="2" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.4572, 0, 20.6651 )
+
+[node name="AssaultRifle5" parent="HoveringWeapons" index="3" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1635, 0, -21.466 )
+
+[node name="AssaultRifle2" parent="HoveringWeapons" index="4" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0936, 3.6803, -9.33329 )
+
+[node name="Shotgun2" parent="HoveringWeapons" index="5" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1925, 0, -0.338864 )
+weapon = 1
+
+[node name="Shotgun" parent="HoveringWeapons" index="6" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.45, 3.6803, 21.2808 )
+weapon = 1
+
+[node name="Shotgun3" parent="HoveringWeapons" index="7" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.3531, 4.13777, 3.32229 )
+weapon = 1
+
+[node name="Sniper" parent="HoveringWeapons" index="8" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.09445, 11.2719, -0.0855438 )
+weapon = 3
+
+[node name="Sniper2" parent="HoveringWeapons" index="9" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8361, 4.05739, 19.1666 )
+weapon = 3

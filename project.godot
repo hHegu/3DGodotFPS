@@ -69,7 +69,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Trail/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Trail/plugin.cfg", "res://addons/zylann.scatter/plugin.cfg" )
 
 [global]
 
@@ -158,6 +158,7 @@ use={
 3d_physics/layer_2="ground"
 3d_physics/layer_3="player"
 3d_physics/layer_4="pickup"
+3d_physics/layer_5="target"
 
 [physics]
 
