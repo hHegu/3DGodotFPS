@@ -15,6 +15,9 @@ onready var buffered_jump_timer: Timer = $BufferedJumpTimer
 onready var camera: Camera = $Pivot/RecoilPivot/Camera
 onready var network_position_tween: Tween = $NetworkUtils/PositionTween
 
+onready var head_hitbox: Area = $HeadArea
+onready var body_hitbox: Area = $BodyArea
+
 export var gravity := -20.0
 export var max_speed := 8.0
 export var aim_move_speed := 4.0
@@ -108,8 +111,6 @@ func set_player_health(new_health):
 		death()
 
 
-
-
 func death():
 	if is_network_master():
 		toggle_player_control(false)
@@ -139,8 +140,12 @@ func _unhandled_input(event):
 		return
 
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotate_y(-event.relative.x * mouse_sensitivity)
-		pivot.rotate_x(-event.relative.y * mouse_sensitivity)
+		var aim_sensitivity_multiplier = 1.0
+		if WeaponSingleton.is_aiming and WeaponSingleton.current_weapon.weapon_id == Enums.WEAPONS_ENUM.sniper:
+			aim_sensitivity_multiplier = WeaponSingleton.current_weapon.aim_sensitivity_multiplier
+	
+		rotate_y(-event.relative.x * mouse_sensitivity * aim_sensitivity_multiplier)
+		pivot.rotate_x(-event.relative.y * mouse_sensitivity * aim_sensitivity_multiplier)
 		pivot.rotation.x = clamp(pivot.rotation.x, deg2rad(-90), deg2rad(90))
 
 

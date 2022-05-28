@@ -73,9 +73,9 @@ remotesync func _start_match():
 
 master func update_score(killed_player_id: int):
 	var team = Lobby.players[killed_player_id].team
-	if team == Enums.TEAMS.BLUE:
-		rset("blue_team_score", blue_team_score + 1)
 	if team == Enums.TEAMS.RED:
+		rset("blue_team_score", blue_team_score + 1)
+	if team == Enums.TEAMS.BLUE:
 		rset("red_team_score", red_team_score + 1)
 
 

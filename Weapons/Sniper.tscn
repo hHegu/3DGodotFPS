@@ -157,6 +157,7 @@ weapon_id = 3
 damage = 80.0
 fire_rate = 1.0
 is_scoped = true
+aim_sensitivity_multiplier = 0.5
 effective_range = 3000.0
 bullet_spread = 0.1
 spread_over_time = SubResource( 7 )

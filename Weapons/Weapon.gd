@@ -11,6 +11,8 @@ export var fire_rate := 0.5
 export var is_automatic := false
 # If true, sniper scope is shown on ads
 export var is_scoped := false
+# ads multiplier for mouse sensitivity
+export var aim_sensitivity_multiplier := 1.0
 
 ## Bullets disappear after this range
 export var effective_range := 2000.0
@@ -190,7 +192,7 @@ func get_random_point_in_a_circle(r: float) -> Vector2:
 
 func fire_bullet(from: Vector3, to: Vector3) -> void:
 	var player = get_owner_player()
-	var result = get_world().direct_space_state.intersect_ray(from, to, [self, player], 1 + 16, true, true)
+	var result = get_world().direct_space_state.intersect_ray(from, to, [self, player, player.head_hitbox, player.body_hitbox], 1 + 16, true, true)
 
 	if result and result.collider and result.collider.has_method('take_damage'):
 		var hitmark_type = result.collider.take_damage(damage)

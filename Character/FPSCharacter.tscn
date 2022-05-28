@@ -79,7 +79,7 @@ height = 1.23363
 [node name="FPSCharacter" type="KinematicBody"]
 collision_layer = 4
 script = ExtResource( 1 )
-weapons = [ 2, 2 ]
+weapons = [ 3, 2 ]
 red_team_color = ExtResource( 6 )
 blue_team_color = ExtResource( 7 )
 
